@@ -47,6 +47,31 @@ El desarrollo de esta herramienta puede facilitar la integración de los estudia
 
 ## 7. Conjunto de patrones
 
+El sistema permite administrar el conjunto de patrones que utilizarán los algoritmos KMP y Boyer-Moore para detectar señales de riesgo dentro de los textos analizados. A través de la interfaz de configuración, el usuario puede registrar nuevos términos o expresiones clave asignándoles una categoría de gravedad y una pauta de actuación.
+
+A continuación, se especifican los campos que estructuran cada registro dentro del sistema, haciendo correspondencia con los elementos del formulario de ingreso:
+
+| Campo | Descripción |
+|:---|:---|
+| **patron** | Palabra o expresión que será buscada dentro del mensaje. Corresponde al término clave ingresado en el formulario (ej. `abandonar`, `ayuda`, `estrés`). |
+| **nivel_alerta** | Nivel de prioridad asignado al patrón, el cual se selecciona mediante un menú desplegable con las opciones: **Alto**, **Medio** o **Bajo**. |
+| **descripcion** | Explica detalladamente el significado o la situación de riesgo educativo asociada al patrón detectado (ej. *Riesgo de deserción*, *Solicitud de apoyo*). |
+| **sugerencia_accion** | Acción recomendada o protocolo que el tutor o profesional de bienestar debe seguir cuando el patrón es encontrado en el texto (ej. *Contactar tutor*, *Monitorear*). |
+
+: Atributos de la estructura de datos de patrones. {#tbl-campos}
+
+---
+
+### 7.1. Registro actual del sistema
+
+La plataforma cuenta con un módulo visual de gestión ("Conjunto de Patrones") que despliega los elementos activos en la base de datos local (`patrones.csv`). Actualmente, el sistema cuenta con 3 patrones base cargados para las pruebas de coincidencia:
+
+| Patrón | Nivel | Descripción | Sugerencia | Acciones |
+|:---|:---:|:---|:---|:---:|
+| `abandonar` | ALTO | Riesgo de deserción. | Contactar tutor. | editar/borrar |
+| `ayuda` | MEDIO | Solicitud de apoyo. | Dar seguimiento. | editar/borrar |
+| `estrés` | BAJO | Estrés académico. | Monitorear. | editar/borrar |
+
 ## 8. Descipción de los algoritmos KMP y Booyer-Moore
 
 ### 8.1. KMP
@@ -54,6 +79,7 @@ El desarrollo de esta herramienta puede facilitar la integración de los estudia
 KMP es un algoritmo de coincidencia de patrones que se apoya en el uso de una función externa como función de falla, `failure` para este proyecto. La función pre-procesa el/los patron/es para determinar los prefijos más largos que se pueden formar dentro del patrón [@brown]. Esto facilita que el algoritmo reduzca el número de comparaciones que se hacen para hallar coincidencias dentro un texto. Cada que existe una incongruencia el algoritmo aprovecha la función de falla para desplazar el patrón aprovechando la mayor cantidad posible de carácteres hasta la posición en que se detectó la falta de coincidencia.
 
 ### 8.2. Booyer-More
+Boyer-Moore es un algoritmo de coincidencia de patrones que realiza las comparaciones iniciando desde el último carácter del patrón hacia el primero. Para reducir el número de comparaciones, utiliza dos heurísticas principales: la regla del mal carácter (bad character) y la regla del buen sufijo (good suffix), las cuales permiten desplazar el patrón varios caracteres cuando ocurre una discrepancia, evitando revisar posiciones que no pueden contener una coincidencia. Gracias a esta estrategia, Boyer-Moore suele ofrecer un rendimiento superior al de los algoritmos de búsqueda secuencial, especialmente cuando el patrón es relativamente largo y el alfabeto del texto es amplio.
 
 ## 9. Implementación y flujo del sistema
 
@@ -68,6 +94,10 @@ KMP es un algoritmo de coincidencia de patrones que se apoya en el uso de una fu
 ![Mockup para la vista incial del sitio](../mockups/vistaInicioOscuro.png){fig-align="center"}
 
 ![Mockup para la vista de carga de archivos](../mockups/vistaCargaOscuro.png){fig-align="center"}
+
+![Mockup para la vista de configuración de patrones](../mockups/vistaPatrones.png){fig-align="center"}
+
+![Mockup para la vista de ejecución de algoritmos y resultados](../mockups/vistaEjecucion.png){fig-align="center"}
 
 ## 13. Limitaciones de KMP y Booyer-Moore
 
