@@ -1,6 +1,6 @@
 ---
 title: "Proyecto Final de Estructuras de Datos y Algoritmos 2" 
-subtitle: "Sistema de ayuda diagnóstica sobre factores de riesgo educativos"
+subtitle: "Sistema de detección preliminar sobre factores de riesgo educativos"
 author:
     - "Jhosua Saa"
     - "Edison Ogonaga"
@@ -90,6 +90,4 @@ KMP es un algoritmo de coincidencia de patrones que se apoya en el uso de una fu
 ## 17. Conclusiones
 
 ## 18. Referencias
-
-::: refs{}
-:::
+::: {#refs} :::
