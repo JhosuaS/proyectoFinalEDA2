@@ -1,0 +1,16 @@
+patron,categoria,nivel_alerta,sugerencia_accion
+no tengo internet,brecha digital,alto,contactar para facilidades de entrega
+sin compu,brecha digital,alto,referir a laboratorio de la facultad
+no conozco a nadie,adaptacion,medio,integrar en grupos de trabajo
+me siento solo,adaptacion,medio,referir a bienestar estudiantil
+ya no quiero,desmotivacion,alto,agendar tutoria de acompanamiento
+perdi las ganas,desmotivacion,medio,seguimiento docente
+no duermo,estres,alto,referir a psicologia
+estoy estresado,estres,medio,revisar carga academica
+voy a perder,riesgo academico,alto,convocar a tutoria academica obligatoria
+estoy reprobando,riesgo academico,alto,revisar metodos de estudio
+no entiendo,riesgo academico,medio,recomendar bibliografia extra
+me retiro,abandono,alto,entrevista urgente con el decanato
+dejar la carrera,abandono,alto,entrevista urgente con el decanato
+necesito tutoria,ayuda,medio,asignar tutor par
+ayuda urgente,ayuda,alto,contacto inmediato por correo institucional

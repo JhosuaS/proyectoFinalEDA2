@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="es" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Detección - EDA II</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js para las gráficas -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Font Awesome para íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        vampire: {
+                            bg: '#0d0d12',       // Fondo principal muy oscuro
+                            card: '#1a1a24',     // Fondo de tarjetas/paneles
+                            border: '#2d2d3d',   // Bordes oscuros
+                            accent: '#e63946',   // Rojo carmesí (estilo vampiro)
+                            accentHover: '#b82a35',
+                            text: '#f8f8f2',     // Texto claro
+                            muted: '#8b8b9e'     // Texto secundario
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Transiciones suaves para el cambio de tema */
+        body { transition: background-color 0.3s, color 0.3s; }
+        .drag-active { border-color: #e63946 !important; background-color: rgba(230, 57, 70, 0.1) !important; }
+        
+        /* Ocultar scrollbar en preview para limpieza visual */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900 dark:bg-vampire-bg dark:text-vampire-text min-h-screen font-sans">
+
+    <header class="fixed top-0 w-full bg-white dark:bg-vampire-card border-b border-gray-200 dark:border-vampire-border shadow-sm z-50 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo / Título -->
+                <div class="flex-shrink-0 flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-red-600 dark:bg-vampire-accent flex items-center justify-center text-white font-bold">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <span class="font-bold text-xl tracking-tight">SafeText Edu</span>
+                </div>
+                
+                <!-- Menú de Navegación -->
+                <nav class="hidden md:flex space-x-8">
+                    <button onclick="switchView('inicio')" id="nav-inicio" class="text-red-600 dark:text-vampire-accent font-semibold px-3 py-2 text-sm transition-colors border-b-2 border-red-600 dark:border-vampire-accent">
+                        Inicio
+                    </button>
+                    <button onclick="switchView('carga')" id="nav-carga" class="text-gray-500 dark:text-vampire-muted hover:text-gray-900 dark:hover:text-vampire-text font-medium px-3 py-2 text-sm transition-colors border-b-2 border-transparent">
+                        Cargar Mensajes
+                    </button>
+                    <button class="text-gray-500 dark:text-vampire-muted hover:text-gray-900 dark:hover:text-vampire-text font-medium px-3 py-2 text-sm transition-colors border-b-2 border-transparent">
+                        Configuración
+                    </button>
+                </nav>
+
+                <!-- Botón Modo Oscuro -->
+                <button onclick="toggleDarkMode()" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-vampire-border transition-colors text-gray-600 dark:text-vampire-text">
+                    <i id="theme-icon" class="fa-solid fa-moon text-lg"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenedor Principal (con margen superior por el header fijo) -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-12">
+
+        <!-- VISTA: INICIO -->
+        <section id="view-inicio" class="block space-y-12 animate-fade-in">
+            <!-- Hero Section -->
+            <div class="text-center max-w-3xl mx-auto space-y-6">
+                <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl">
+                    Detección Temprana de <span class="text-red-600 dark:text-vampire-accent">Señales de Riesgo</span>
+                </h1>
+                <p class="text-lg text-gray-600 dark:text-vampire-muted">
+                    Una herramienta basada en los algoritmos KMP y Boyer-Moore para analizar textos educativos y alertar sobre desmotivación, riesgo académico o necesidad de apoyo, facilitando la intervención oportuna de los tutores.
+                </p>
+                <div class="flex justify-center gap-4">
+                    <button onclick="switchView('carga')" class="bg-red-600 hover:bg-red-700 dark:bg-vampire-accent dark:hover:bg-vampire-accentHover text-white px-6 py-3 rounded-lg font-medium transition-colors shadow-lg">
+                        Empezar Análisis <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Sección de Gráficos de Ejemplo -->
+            <div class="bg-white dark:bg-vampire-card border border-gray-200 dark:border-vampire-border rounded-2xl p-6 md:p-8 shadow-sm">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold mb-2">Ejemplo de Análisis de Patrones</h2>
+                    <p class="text-gray-600 dark:text-vampire-muted text-sm">Distribución de categorías detectadas en una muestra de 10 mensajes estudiantiles.</p>
+                </div>
+                
+                <div class="relative h-80 w-full flex items-center justify-center">
+                    <canvas id="patronesChart"></canvas>
+                </div>
+                
+                <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                    <div class="p-4 rounded-lg bg-gray-50 dark:bg-[#15151e] border border-gray-100 dark:border-vampire-border">
+                        <div class="flex items-center gap-2 mb-1"><i class="fa-solid fa-circle text-red-500 text-xs"></i> <span class="font-bold">Desmotivación (50%)</span></div>
+                        <p class="text-gray-500 dark:text-vampire-muted text-xs">Ej: "No puedo más", "Siento que no avanzo".</p>
+                    </div>
+                    <div class="p-4 rounded-lg bg-gray-50 dark:bg-[#15151e] border border-gray-100 dark:border-vampire-border">
+                        <div class="flex items-center gap-2 mb-1"><i class="fa-solid fa-circle text-orange-400 text-xs"></i> <span class="font-bold">Riesgo Académico (30%)</span></div>
+                        <p class="text-gray-500 dark:text-vampire-muted text-xs">Ej: "Voy a perder la materia", "Reprobé el examen".</p>
+                    </div>
+                    <div class="p-4 rounded-lg bg-gray-50 dark:bg-[#15151e] border border-gray-100 dark:border-vampire-border">
+                        <div class="flex items-center gap-2 mb-1"><i class="fa-solid fa-circle text-purple-500 text-xs"></i> <span class="font-bold">Solicitud de Ayuda (20%)</span></div>
+                        <p class="text-gray-500 dark:text-vampire-muted text-xs">Ej: "Necesito tutorías", "Requiero ayuda".</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VISTA: CARGA DE MENSAJES -->
+        <section id="view-carga" class="hidden animate-fade-in">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold">Carga de Mensajes</h2>
+                <p class="text-gray-600 dark:text-vampire-muted mt-2">Ingresa el texto manualmente o sube un archivo (.txt, .csv, .xlsx) para analizar.</p>
+            </div>
+
+            <!-- Layout Principal 2/3 y 1/3 -->
+            <div class="flex flex-col lg:flex-row gap-8">
+                
+                <!-- Columna Izquierda: Controles de Carga -->
+                <div class="w-full lg:w-3/5 space-y-6">
+                    
+                    <!-- Caja de Texto -->
+                    <div class="bg-white dark:bg-vampire-card rounded-xl shadow-sm border border-gray-200 dark:border-vampire-border p-5">
+                        <label for="text-input" class="block text-sm font-semibold mb-2">Entrada Manual</label>
+                        <textarea id="text-input" rows="4" placeholder="Escribe o pega el mensaje del estudiante aquí..." class="w-full p-3 rounded-lg bg-gray-50 dark:bg-[#15151e] border border-gray-300 dark:border-vampire-border focus:ring-2 focus:ring-red-500 dark:focus:ring-vampire-accent outline-none transition-all dark:text-vampire-text resize-none" oninput="updatePreviewText()"></textarea>
+                    </div>
+
+                    <!-- Zona Drag & Drop -->
+                    <div class="bg-white dark:bg-vampire-card rounded-xl shadow-sm border border-gray-200 dark:border-vampire-border p-5">
+                        <label class="block text-sm font-semibold mb-3">Subir Archivo</label>
+                        
+                        <div id="drop-zone" class="border-2 border-dashed border-gray-300 dark:border-vampire-border rounded-xl p-8 text-center cursor-pointer hover:bg-gray-50 dark:hover:bg-[#15151e] transition-colors">
+                            <div class="text-4xl text-gray-400 dark:text-vampire-muted mb-3">
+                                <i class="fa-solid fa-cloud-arrow-up"></i>
+                            </div>
+                            <p class="text-gray-700 dark:text-vampire-text font-medium">Arrastra y suelta tu archivo aquí</p>
+                            <p class="text-xs text-gray-500 dark:text-vampire-muted mt-1">Soporta .txt, .csv, .xlsx</p>
+                            
+                            <div class="mt-4 flex items-center justify-center gap-4">
+                                <span class="text-sm text-gray-400">o</span>
+                            </div>
+                            
+                            <button onclick="document.getElementById('file-upload').click()" class="mt-4 px-4 py-2 bg-gray-200 dark:bg-vampire-border hover:bg-gray-300 dark:hover:bg-gray-700 text-sm font-medium rounded-lg transition-colors">
+                                Explorar Archivos
+                            </button>
+                            <input type="file" id="file-upload" class="hidden" accept=".txt,.csv,.xlsx" onchange="handleFileSelect(event)">
+                        </div>
+
+                        <!-- Barra de Progreso (Oculta por defecto) -->
+                        <div id="progress-container" class="hidden mt-6">
+                            <div class="flex justify-between text-xs mb-1">
+                                <span id="file-name-display" class="font-medium truncate max-w-[200px]">archivo.txt</span>
+                                <span id="progress-text" class="text-red-600 dark:text-vampire-accent font-bold">0%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 dark:bg-vampire-border rounded-full h-2.5">
+                                <div id="progress-bar" class="bg-red-600 dark:bg-vampire-accent h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end">
+                        <button class="bg-red-600 hover:bg-red-700 dark:bg-vampire-accent dark:hover:bg-vampire-accentHover text-white px-6 py-3 rounded-lg font-bold shadow-md transition-colors w-full sm:w-auto">
+                            <i class="fa-solid fa-magnifying-glass mr-2"></i> Ejecutar Algoritmos
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Columna Derecha: Previsualización -->
+                <div class="w-full lg:w-2/5">
+                    <div class="bg-white dark:bg-vampire-card rounded-xl shadow-sm border border-gray-200 dark:border-vampire-border h-full flex flex-col overflow-hidden sticky top-24">
+                        
+                        <div class="bg-gray-100 dark:bg-[#15151e] px-4 py-3 border-b border-gray-200 dark:border-vampire-border flex justify-between items-center">
+                            <h3 class="font-bold text-sm flex items-center gap-2">
+                                <i class="fa-regular fa-eye text-red-600 dark:text-vampire-accent"></i> Previsualización
+                            </h3>
+                            <span class="text-xs bg-gray-200 dark:bg-vampire-border px-2 py-1 rounded text-gray-600 dark:text-vampire-text" id="preview-badge">Texto Manual</span>
+                        </div>
+                        
+                        <!-- Contenido del Preview -->
+                        <div class="p-4 flex-1 overflow-y-auto no-scrollbar bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjIiIGZpbGw9InJnYmEoMTI4LCAxMjgsIDEyOCwgMC4xKSIvPjwvc3ZnPg==')]">
+                            <div id="preview-content" class="text-sm text-gray-600 dark:text-vampire-muted italic whitespace-pre-wrap font-mono">
+                                Aún no hay contenido para previsualizar. Escribe en el cuadro de texto o carga un archivo.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // 1. Gestión del Modo Oscuro
+        const htmlElement = document.documentElement;
+        const themeIcon = document.getElementById('theme-icon');
+        let isDarkMode = false;
+
+        function toggleDarkMode() {
+            isDarkMode = !isDarkMode;
+            if (isDarkMode) {
+                htmlElement.classList.add('dark');
+                htmlElement.classList.remove('light');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                htmlElement.classList.remove('dark');
+                htmlElement.classList.add('light');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+            updateChartTheme(); // Actualizar colores del gráfico
+        }
+
+        // 2. Navegación entre vistas
+        function switchView(viewName) {
+            // Ocultar todas las vistas
+            document.getElementById('view-inicio').classList.add('hidden');
+            document.getElementById('view-carga').classList.add('hidden');
+            
+            // Resetear estilos de navegación
+            document.getElementById('nav-inicio').classList.replace('border-red-600', 'border-transparent');
+            document.getElementById('nav-inicio').classList.replace('dark:border-vampire-accent', 'border-transparent');
+            document.getElementById('nav-inicio').classList.replace('text-red-600', 'text-gray-500');
+            document.getElementById('nav-inicio').classList.replace('dark:text-vampire-accent', 'dark:text-vampire-muted');
+
+            document.getElementById('nav-carga').classList.replace('border-red-600', 'border-transparent');
+            document.getElementById('nav-carga').classList.replace('dark:border-vampire-accent', 'border-transparent');
+            document.getElementById('nav-carga').classList.replace('text-red-600', 'text-gray-500');
+            document.getElementById('nav-carga').classList.replace('dark:text-vampire-accent', 'dark:text-vampire-muted');
+
+            // Mostrar vista seleccionada
+            document.getElementById(`view-${viewName}`).classList.remove('hidden');
+            
+            // Activar botón de navegación
+            const activeBtn = document.getElementById(`nav-${viewName}`);
+            activeBtn.classList.replace('border-transparent', 'border-red-600');
+            activeBtn.classList.add('dark:border-vampire-accent');
+            activeBtn.classList.replace('text-gray-500', 'text-red-600');
+            activeBtn.classList.replace('dark:text-vampire-muted', 'dark:text-vampire-accent');
+        }
+
+        // 3. Lógica de Previsualización y Carga de Archivos
+        const previewContent = document.getElementById('preview-content');
+        const previewBadge = document.getElementById('preview-badge');
+        const textInput = document.getElementById('text-input');
+
+        function updatePreviewText() {
+            const text = textInput.value;
+            if (text.trim() === '') {
+                previewContent.innerHTML = '<span class="italic">Aún no hay contenido para previsualizar.</span>';
+            } else {
+                previewContent.classList.remove('italic', 'text-gray-600');
+                previewContent.textContent = text;
+                previewBadge.textContent = "Texto Manual";
+            }
+        }
+
+        // Drag & Drop
+        const dropZone = document.getElementById('drop-zone');
+        
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) { e.preventDefault(); e.stopPropagation(); }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, () => dropZone.classList.add('drag-active'), false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, () => dropZone.classList.remove('drag-active'), false);
+        });
+
+        dropZone.addEventListener('drop', handleDrop, false);
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            if (files.length) simulateUpload(files[0]);
+        }
+
+        function handleFileSelect(e) {
+            if (e.target.files.length) simulateUpload(e.target.files[0]);
+        }
+
+        function simulateUpload(file) {
+            const progressContainer = document.getElementById('progress-container');
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+            const fileNameDisplay = document.getElementById('file-name-display');
+
+            fileNameDisplay.textContent = file.name;
+            progressContainer.classList.remove('hidden');
+            progressBar.style.width = '0%';
+            progressText.textContent = '0%';
+            
+            // Limpiar textarea si se sube archivo
+            textInput.value = '';
+            
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.floor(Math.random() * 15) + 5;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    
+                    // Mostrar simulación en el preview
+                    previewBadge.textContent = "Archivo: " + file.name;
+                    previewContent.innerHTML = `[Contenido simulado extraído de ${file.name}]<br><br>1. "Estoy pensando en abandonar la carrera."<br>2. "No entiendo nada de la materia de algoritmos."<br>3. "Necesito ayuda con los temas de grafos."`;
+                    previewContent.classList.remove('italic');
+                }
+                progressBar.style.width = progress + '%';
+                progressText.textContent = progress + '%';
+            }, 200);
+        }
+
+        // 4. Gráfico con Chart.js
+        let chartInstance = null;
+
+        function initChart() {
+            const ctx = document.getElementById('patronesChart').getContext('2d');
+            
+            const data = {
+                labels: ['Desmotivación', 'Riesgo Académico', 'Solicitud Ayuda', 'Problemas Adaptación'],
+                datasets: [{
+                    label: 'Patrones Detectados (%)',
+                    data: [50, 30, 12, 8],
+                    backgroundColor: [
+                        'rgba(239, 68, 68, 0.8)',   // Rojo
+                        'rgba(249, 115, 22, 0.8)',  // Naranja
+                        'rgba(168, 85, 247, 0.8)',  // Morado
+                        'rgba(99, 102, 241, 0.8)'   // Indigo
+                    ],
+                    borderColor: [
+                        'rgb(239, 68, 68)',
+                        'rgb(249, 115, 22)',
+                        'rgb(168, 85, 247)',
+                        'rgb(99, 102, 241)'
+                    ],
+                    borderWidth: 1,
+                    borderRadius: 6
+                }]
+            };
+
+            const config = {
+                type: 'bar',
+                data: data,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            grid: { color: isDarkMode ? '#2d2d3d' : '#e5e7eb' },
+                            ticks: { color: isDarkMode ? '#8b8b9e' : '#6b7280' }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: isDarkMode ? '#8b8b9e' : '#6b7280' }
+                        }
+                    }
+                }
+            };
+
+            chartInstance = new Chart(ctx, config);
+        }
+
+        function updateChartTheme() {
+            if (chartInstance) {
+                chartInstance.options.scales.y.grid.color = isDarkMode ? '#2d2d3d' : '#e5e7eb';
+                chartInstance.options.scales.y.ticks.color = isDarkMode ? '#8b8b9e' : '#6b7280';
+                chartInstance.options.scales.x.ticks.color = isDarkMode ? '#8b8b9e' : '#6b7280';
+                chartInstance.update();
+            }
+        }
+
+        // Inicializar gráfico al cargar la página
+        window.onload = initChart;
+
+    </script>
+</body>
+</html>
