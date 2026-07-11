@@ -1,0 +1,1 @@
+#TODO: lógica que une visuales y controladores
