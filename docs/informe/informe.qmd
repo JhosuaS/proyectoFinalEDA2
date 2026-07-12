@@ -58,9 +58,6 @@ A continuación, se especifican los campos que estructuran cada registro dentro 
 | **descripcion** | Explica detalladamente el significado o la situación de riesgo educativo asociada al patrón detectado (ej. *Riesgo de deserción*, *Solicitud de apoyo*). |
 | **sugerencia_accion** | Acción recomendada o protocolo que el tutor o profesional de bienestar debe seguir cuando el patrón es encontrado en el texto (ej. *Contactar tutor*, *Monitorear*). |
 
-: Atributos de la estructura de datos de patrones. {#tbl-campos}
-
----
 
 ### 7.1. Registro actual del sistema
 
