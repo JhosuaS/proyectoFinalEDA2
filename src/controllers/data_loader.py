@@ -1,205 +1,114 @@
 import csv
 import os
 
-
-# ==========================================
-# CARGAR MENSAJES
-# ==========================================
-
 def load_messages(csv_path):
     """
-    Carga cualquier archivo CSV de mensajes.
-
-    Debe contener al menos una columna llamada:
-        mensaje
-
-    Opcionalmente puede tener:
-        id_mensaje
+    Carga el archivo CSV de mensajes. Debe contener la columna 'mensaje'.
     """
-
     messages = []
-
     if not os.path.exists(csv_path):
         raise FileNotFoundError(f"No existe el archivo: {csv_path}")
 
     with open(csv_path, mode="r", newline="", encoding="utf-8-sig") as file:
-
         reader = csv.DictReader(file)
-
         if "mensaje" not in reader.fieldnames:
-            raise ValueError(
-                "El CSV de mensajes debe contener una columna llamada 'mensaje'."
-            )
-
+            raise ValueError("El CSV de mensajes debe contener una columna llamada 'mensaje'.")
         for row in reader:
             messages.append(row)
-
     return messages
-
-
-# ==========================================
-# CARGAR PATRONES
-# ==========================================
 
 def load_patterns(csv_path):
     """
-    Carga cualquier archivo CSV de patrones.
-
-    Columnas esperadas:
-
-    patron
-    nivel_alerta
-    descripcion
-    sugerencia_accion
+    Carga el archivo CSV de patrones con las columnas requeridas por el proyecto.
     """
-
     patterns = []
-
     if not os.path.exists(csv_path):
         raise FileNotFoundError(f"No existe el archivo: {csv_path}")
 
     with open(csv_path, mode="r", newline="", encoding="utf-8-sig") as file:
-
         reader = csv.DictReader(file)
-
-        columnas = {
+        # Se cambió 'descripcion' por 'categoria' para coincidir con la fuente [3]
+        columnas_requeridas = {
             "patron",
             "nivel_alerta",
-            "descripcion",
+            "categoria",
             "sugerencia_accion"
         }
 
-        if not columnas.issubset(set(reader.fieldnames)):
+        if not columnas_requeridas.issubset(set(reader.fieldnames)):
             raise ValueError(
-                "El CSV de patrones no tiene el formato esperado."
+                f"El CSV de patrones no tiene el formato esperado. "
+                f"Columnas detectadas: {reader.fieldnames}"
             )
 
         for row in reader:
             patterns.append(row)
-
     return patterns
 
 
-# ==========================================
-# AGREGAR PATRÓN
-# ==========================================
-
-def add_pattern(csv_path,
-                patron,
-                nivel,
-                descripcion,
-                sugerencia):
+def add_pattern(csv_path, patron, nivel, categoria, sugerencia):
     """
-    Agrega un patrón al CSV seleccionado.
+    Agrega un nuevo patrón respetando el orden de columnas del proyecto [2].
     """
-
-    campos = [
-        "patron",
-        "nivel_alerta",
-        "descripcion",
-        "sugerencia_accion"
-    ]
-
+    campos = ["patron", "categoria", "nivel_alerta", "sugerencia_accion"]
+    
     archivo_nuevo = (
         not os.path.exists(csv_path)
         or os.path.getsize(csv_path) == 0
     )
 
-    with open(csv_path,
-              mode="a",
-              newline="",
-              encoding="utf-8") as file:
-
+    with open(csv_path, mode="a", newline="", encoding="utf-8") as file:
         writer = csv.DictWriter(file, fieldnames=campos)
-
         if archivo_nuevo:
             writer.writeheader()
 
         writer.writerow({
             "patron": patron,
+            "categoria": categoria,
             "nivel_alerta": nivel,
-            "descripcion": descripcion,
             "sugerencia_accion": sugerencia
         })
 
-
-# ==========================================
-# EDITAR PATRÓN
-# ==========================================
-
-def update_pattern(csv_path,
-                   patron_original,
-                   nuevo_patron,
-                   nivel,
-                   descripcion,
-                   sugerencia):
-
+def update_pattern(csv_path, patron_original, nuevo_patron, nivel, categoria, sugerencia):
+    """
+    Actualiza un patrón existente usando la columna 'categoria' [1, 3].
+    """
     patterns = load_patterns(csv_path)
-
+    encontrado = False
     for row in patterns:
-
         if row["patron"] == patron_original:
-
             row["patron"] = nuevo_patron
             row["nivel_alerta"] = nivel
-            row["descripcion"] = descripcion
+            row["categoria"] = categoria 
             row["sugerencia_accion"] = sugerencia
+            encontrado = True
 
-    save_patterns(csv_path, patterns)
-
-
-# ==========================================
-# ELIMINAR PATRÓN
-# ==========================================
+    if encontrado:
+        save_patterns(csv_path, patterns)
 
 def delete_pattern(csv_path, patron):
-
     patterns = load_patterns(csv_path)
-
-    patterns = [
-        p for p in patterns
-        if p["patron"] != patron
-    ]
-
+    patterns = [p for p in patterns if p["patron"] != patron]
     save_patterns(csv_path, patterns)
 
 
-# ==========================================
-# GUARDAR PATRONES
-# ==========================================
-
 def save_patterns(csv_path, patterns):
-
-    campos = [
-        "patron",
-        "nivel_alerta",
-        "descripcion",
-        "sugerencia_accion"
-    ]
-
-    with open(csv_path,
-              mode="w",
-              newline="",
-              encoding="utf-8") as file:
-
+    """
+    Sobrescribe el archivo CSV con la lista de patrones actualizada.
+    """
+    campos = ["patron", "categoria", "nivel_alerta", "sugerencia_accion"]
+    with open(csv_path, mode="w", newline="", encoding="utf-8") as file:
         writer = csv.DictWriter(file, fieldnames=campos)
-
         writer.writeheader()
-
         writer.writerows(patterns)
 
 
-# ==========================================
-# BUSCAR PATRÓN
-# ==========================================
-
 def find_pattern(csv_path, patron):
-
-    patterns = load_patterns(csv_path)
-
-    for row in patterns:
-
-        if row["patron"].lower() == patron.lower():
-            return row
-
+    try:
+        patterns = load_patterns(csv_path)
+        for row in patterns:
+            if row["patron"].lower() == patron.lower():
+                return row
+    except Exception:
+        return None
     return None
