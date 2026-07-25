@@ -44,8 +44,8 @@ def analizar(mensajes, patrones, algoritmo='kmp'):
 def main():
     print("Iniciando...")
     base_path = os.path.dirname(os.path.abspath(__file__))
-    path_msg = os.path.join(base_path, "data", "messages.csv")
-    path_pat = os.path.join(base_path, "data", "patterns.csv")
+    path_msg = os.path.join(base_path, "..", "data", "messages.csv")
+    path_pat = os.path.join(base_path, "..", "data", "patterns.csv")
 
     print("SISTEMA DE DETECCIÓN SAFE-TEXT")
 
