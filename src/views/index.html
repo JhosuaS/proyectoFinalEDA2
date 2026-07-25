@@ -359,7 +359,7 @@
                             </div>
                         </div>
 
-                        <button onclick="ejecutarAlgoritmoMock()" class="w-full bg-red-600 hover:bg-red-700 dark:bg-vampire-accent dark:hover:bg-vampire-accentHover text-white py-3 rounded-lg font-bold shadow-md transition-colors flex items-center justify-center gap-2">
+                        <button onclick="ejecutarAlgoritmo()" class="w-full bg-red-600 hover:bg-red-700 dark:bg-vampire-accent dark:hover:bg-vampire-accentHover text-white py-3 rounded-lg font-bold shadow-md transition-colors flex items-center justify-center gap-2">
                             <i class="fa-solid fa-play"></i> Ejecutar Algoritmo
                         </button>
                     </div>
@@ -562,6 +562,72 @@
                 </div>
             </div>
         </section>
+        <!-- VISTA: RESULTADOS Y ALERTAS -->
+        <section id="view-resultados" class="animate-fade-in space-y-8">
+            <div class="flex justify-between items-end mb-6">
+                <div>
+                    <h2 class="text-3xl font-bold">Panel de Intervención</h2>
+                    <p class="text-gray-600 dark:text-vampire-muted mt-2">
+                        Análisis final de mensajes con sugerencias de acción inmediata.
+                    </p>
+                </div>
+                <!-- Indicador de eficiencia comparativa -->
+                <div class="text-right">
+                    <span class="text-xs text-vampire-muted uppercase">Algoritmo más eficiente</span>
+                    <div class="text-vampire-accent font-bold text-xl">Boyer-Moore (15% más rápido)</div>
+                </div>
+            </div>
+
+            <!-- Layout: Gráfica y Resumen de Alertas -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                
+                <!-- Columna Izquierda: Gráfica de Apoyo (Cargar imagen generada por metrics.py) -->
+                <div class="lg:col-span-1 bg-white dark:bg-vampire-card rounded-xl p-6 border border-vampire-border shadow-sm">
+                    <h3 class="text-sm font-bold mb-4 uppercase tracking-widest text-vampire-muted">Distribución de Riesgo</h3>
+                    <img src="../docs/mockups/chart_categorias.png" alt="Gráfica de Categorías" class="w-full rounded-lg">
+                    <p class="mt-4 text-xs italic text-vampire-muted text-center">
+                        Visualización basada en el análisis de patrones detectados.
+                    </p>
+                </div>
+
+                <!-- Columna Derecha: Listado de Alertas Críticas -->
+                <div class="lg:col-span-2 space-y-4">
+                    <h3 class="text-sm font-bold mb-2 uppercase tracking-widest text-vampire-muted">Alertas Críticas Detectadas</h3>
+                    
+                    <!-- Ejemplo de Tarjeta de Alerta (Generar dinámicamente) -->
+                    <div class="bg-white dark:bg-vampire-card border-l-4 border-vampire-accent p-5 rounded-r-xl shadow-sm space-y-3 transition-transform hover:scale-[1.01]">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <span class="bg-red-900/30 text-vampire-accent text-[10px] font-bold px-2 py-0.5 rounded uppercase mb-1 inline-block">Riesgo: Alto</span>
+                                <h4 class="font-bold text-lg">Intención de Abandono</h4>
+                            </div>
+                            <span class="text-vampire-muted text-xs font-mono">Posición: 24</span>
+                        </div>
+                        <p class="text-sm italic text-gray-400">"No aguanto más la presión, estoy pensando en dejar la carrera..."</p>
+                        <div class="bg-[#15151e] p-3 rounded-lg border border-vampire-border">
+                            <span class="text-[10px] font-bold text-vampire-accent uppercase block mb-1">Acción Recomendada:</span>
+                            <p class="text-sm">Derivar inmediatamente a tutor académico para entrevista urgente [9].</p>
+                        </div>
+                    </div>
+
+                    <!-- Otra Alerta -->
+                    <div class="bg-white dark:bg-vampire-card border-l-4 border-purple-500 p-5 rounded-r-xl shadow-sm space-y-3 opacity-90">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <span class="bg-purple-900/30 text-purple-400 text-[10px] font-bold px-2 py-0.5 rounded uppercase mb-1 inline-block">Riesgo: Medio</span>
+                                <h4 class="font-bold text-lg">Solicitud de Ayuda</h4>
+                            </div>
+                            <span class="text-vampire-muted text-xs font-mono">Posición: 12</span>
+                        </div>
+                        <p class="text-sm italic text-gray-400">"Necesito ayuda urgente con la materia de algoritmos..."</p>
+                        <div class="bg-[#15151e] p-3 rounded-lg border border-vampire-border">
+                            <span class="text-[10px] font-bold text-purple-400 uppercase block mb-1">Acción Recomendada:</span>
+                            <p class="text-sm">Recomendar programa de tutoría par o bibliografía extra [9].</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
     <script>
@@ -643,41 +709,105 @@
             sugTextarea.value = '';
         }
 
-        // 3. Simulación de Ejecución de Algoritmos
-        function ejecutarAlgoritmoMock() {
+        // 3. Ejecución real contra el backend Flask (/api/ejecutar)
+        const NIVEL_BADGE = {
+            ALTO: 'bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400',
+            MEDIO: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-400',
+            BAJO: 'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400'
+        };
+
+        function leerPatronesDeTabla() {
+            const filas = document.querySelectorAll('#patrones-table-body tr');
+            return Array.from(filas).map(fila => {
+                const celdas = fila.querySelectorAll('td');
+                return {
+                    patron: celdas[0].textContent.trim(),
+                    nivel_alerta: celdas[1].textContent.trim(),
+                    categoria: celdas[2].textContent.trim(),
+                    sugerencia_accion: celdas[3].textContent.trim()
+                };
+            });
+        }
+
+        async function ejecutarAlgoritmo() {
             const algo = document.getElementById('algo-select').value;
-            const algoText = algo === 'kmp' ? 'KMP' : 'Boyer-Moore';
-            
-            const totalMsgs = Math.floor(Math.random() * 60) + 100;
-            const coincidencias = Math.floor(Math.random() * 20) + 5;
-            const tiempo = (Math.random() * 0.4 + 0.1).toFixed(2);
+            const boton = event ? event.currentTarget : null;
+            if (boton) { boton.disabled = true; boton.classList.add('opacity-60'); }
 
-            document.getElementById('stat-mensajes').textContent = totalMsgs;
-            document.getElementById('stat-coincidencias').textContent = coincidencias;
-            document.getElementById('stat-tiempo').textContent = tiempo + ' ms';
-            document.getElementById('stat-algoritmo').textContent = algoText;
+            try {
+                const formData = new FormData();
+                formData.append('algoritmo', algo);
+                formData.append('patrones', JSON.stringify(leerPatronesDeTabla()));
 
-            const tbody = document.getElementById('resultados-table-body');
-            tbody.innerHTML = `
-                <tr>
-                    <td class="py-3 px-2 font-mono text-xs">#MSG-${Math.floor(Math.random() * 9000) + 1000}</td>
-                    <td class="py-3 px-2 font-medium">abandonar</td>
-                    <td class="py-3 px-2">Índice ${Math.floor(Math.random() * 40)}</td>
-                    <td class="py-3 px-2">
-                        <span class="bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400 px-2 py-0.5 rounded-full text-xs font-bold">ALTO</span>
-                    </td>
-                    <td class="py-3 px-2 text-gray-500 dark:text-vampire-muted">${algoText}</td>
-                </tr>
-                <tr>
-                    <td class="py-3 px-2 font-mono text-xs">#MSG-${Math.floor(Math.random() * 9000) + 1000}</td>
-                    <td class="py-3 px-2 font-medium">ayuda</td>
-                    <td class="py-3 px-2">Índice ${Math.floor(Math.random() * 40)}</td>
-                    <td class="py-3 px-2">
-                        <span class="bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-400 px-2 py-0.5 rounded-full text-xs font-bold">MEDIO</span>
-                    </td>
-                    <td class="py-3 px-2 text-gray-500 dark:text-vampire-muted">${algoText}</td>
-                </tr>
-            `;
+                const archivoInput = document.getElementById('algo-file-picker');
+                if (archivoInput.files.length) {
+                    formData.append('mensajes', archivoInput.files[0]);
+                }
+
+                const res = await fetch('/api/ejecutar', { method: 'POST', body: formData });
+                const data = await res.json();
+
+                if (!res.ok) {
+                    alert(data.error || 'Error al ejecutar el análisis.');
+                    return;
+                }
+
+                document.getElementById('stat-mensajes').textContent = data.total_mensajes;
+                document.getElementById('stat-coincidencias').textContent = data.coincidencias;
+                document.getElementById('stat-tiempo').textContent = data.tiempo_ms + ' ms';
+                document.getElementById('stat-algoritmo').textContent = data.algoritmo === 'KMP' ? 'KMP' : 'Boyer-Moore';
+
+                const tbody = document.getElementById('resultados-table-body');
+                if (!data.alertas.length) {
+                    tbody.innerHTML = '<tr><td colspan="5" class="py-4 text-center text-gray-500 dark:text-vampire-muted">Sin coincidencias con los patrones configurados.</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = data.alertas.map(a => `
+                    <tr>
+                        <td class="py-3 px-2 font-mono text-xs">${a.id}</td>
+                        <td class="py-3 px-2 font-medium">${a.patron}</td>
+                        <td class="py-3 px-2">Índice ${a.posicion.join(', ')}</td>
+                        <td class="py-3 px-2">
+                            <span class="${NIVEL_BADGE[a.nivel.toUpperCase()] || NIVEL_BADGE.BAJO} px-2 py-0.5 rounded-full text-xs font-bold">${a.nivel.toUpperCase()}</span>
+                        </td>
+                        <td class="py-3 px-2 text-gray-500 dark:text-vampire-muted">${a.algoritmo}</td>
+                    </tr>
+                `).join('');
+            } catch (err) {
+                alert('No se pudo conectar con el backend (app.py). ¿Está corriendo?');
+                console.error(err);
+            } finally {
+                if (boton) { boton.disabled = false; boton.classList.remove('opacity-60'); }
+            }
+        }
+
+        // Carga los patrones reales desde patterns.csv (vía /api/patrones) al iniciar
+        async function cargarPatronesDesdeBackend() {
+            try {
+                const res = await fetch('/api/patrones');
+                const patrones = await res.json();
+                if (!patrones.length) return;
+
+                const tbody = document.getElementById('patrones-table-body');
+                tbody.innerHTML = patrones.map(p => `
+                    <tr>
+                        <td class="py-3 px-2 font-medium">${p.patron}</td>
+                        <td class="py-3 px-2">
+                            <span class="${NIVEL_BADGE[p.nivel_alerta.toUpperCase()] || NIVEL_BADGE.BAJO} px-2 py-1 rounded-full text-xs font-bold">${p.nivel_alerta.toUpperCase()}</span>
+                        </td>
+                        <td class="py-3 px-2 text-gray-600 dark:text-vampire-muted">${p.categoria}</td>
+                        <td class="py-3 px-2 text-gray-600 dark:text-vampire-muted">${p.sugerencia_accion}</td>
+                        <td class="py-3 px-2 text-center space-x-2">
+                            <button class="text-blue-500 hover:text-blue-600 transition"><i class="fa-solid fa-pen"></i></button>
+                            <button onclick="eliminarPatron(this)" class="text-red-500 hover:text-red-600 transition"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `).join('');
+                actualizarContadorPatrones();
+            } catch (err) {
+                console.error('No se pudieron cargar los patrones del backend:', err);
+            }
         }
 
         function toggleDarkMode() {
@@ -880,6 +1010,7 @@
         window.onload = function() {
             initChart();
             alternarPasosMockup(); // Sincroniza la visualización inicial de los pasos del algoritmo
+            cargarPatronesDesdeBackend(); // Reemplaza los patrones de ejemplo por los de patterns.csv
         };
     </script>
 </body>
