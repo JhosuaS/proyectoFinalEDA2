@@ -1,1 +1,6 @@
 /docs/ieee.csl
+__pycache__/
+*.pyc
+/docs/mockups/
+reporte_categorias.png
+reporte_rendimiento.png

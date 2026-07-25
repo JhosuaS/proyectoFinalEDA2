@@ -2,6 +2,7 @@ import os
 import json
 import tempfile
 from flask import Flask, request, jsonify, send_from_directory
+from controllers.metrics import generate_charts
 
 from main import analizar
 from controllers.data_loader import load_messages, load_patterns
@@ -16,7 +17,10 @@ app = Flask(__name__, static_folder=VIEWS_DIR, static_url_path="")
 def index():
     return send_from_directory(VIEWS_DIR, "index.html")
 
-
+@app.route("/api/graficas/<path:filename>")
+def serve_graficas(filename):
+    ruta_mockups = os.path.join(BASE_DIR, "..", "docs", "mockups")
+    return send_from_directory(ruta_mockups, filename)
 
 @app.route("/api/patrones", methods=["GET"])
 def get_patrones():
@@ -54,7 +58,8 @@ def ejecutar():
         return jsonify({"error": "No hay patrones configurados."}), 400
 
     tiempos_totales, alertas = analizar(mensajes, patrones, algoritmo=algoritmo)
-
+    generate_charts(tiempos_totales, alertas)
+    
     resultado = {
         "total_mensajes": len(mensajes),
         "coincidencias": len(alertas),
