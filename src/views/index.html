@@ -368,7 +368,7 @@
                             </div>
                         </div>
 
-                        <button onclick="ejecutarAlgoritmoMock()" class="w-full bg-red-600 hover:bg-red-700 dark:bg-vampire-accent dark:hover:bg-vampire-accentHover text-white py-3 rounded-lg font-bold shadow-md transition-colors flex items-center justify-center gap-2">
+                        <button onclick="ejecutarAlgoritmo()" class="w-full bg-red-600 hover:bg-red-700 dark:bg-vampire-accent dark:hover:bg-vampire-accentHover text-white py-3 rounded-lg font-bold shadow-md transition-colors flex items-center justify-center gap-2">
                             <i class="fa-solid fa-play"></i> Ejecutar Algoritmo
                         </button>
                     </div>
@@ -467,168 +467,180 @@
                         <div class="w-12 h-12 rounded-lg bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-vampire-accent flex items-center justify-center text-xl">
                             <i class="fa-solid fa-file-lines"></i>
                         </div>
+                        <p class="text-xs text-gray-600 dark:text-vampire-muted pl-10">Se carga el texto y el patrón.</p>
                     </div>
-                </div>
-                <div class="bg-white dark:bg-vampire-card border border-gray-200 dark:border-vampire-border rounded-xl p-6 shadow-sm">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <span class="text-xs font-semibold text-gray-500 dark:text-vampire-muted uppercase tracking-wider">Patrones Encontrados</span>
-                            <h3 class="text-2xl font-bold mt-1">18 Coincidencias</h3>
+                    <!-- Paso 2 -->
+                    <div class="p-4 rounded-xl border border-gray-200 dark:border-vampire-border bg-gray-50/50 dark:bg-[#15151e]/50 shadow-sm transition-all">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="w-7 h-7 rounded-full bg-gray-200 dark:bg-vampire-border text-gray-600 dark:text-vampire-muted flex items-center justify-center font-bold text-xs">2</span>
+                            <i class="fa-solid fa-table text-gray-400 dark:text-vampire-muted text-base"></i>
+                            <h4 class="font-bold text-sm">Tabla de Fallos</h4>
                         </div>
-                        <div class="w-12 h-12 rounded-lg bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 flex items-center justify-center text-xl">
-                            <i class="fa-solid fa-crosshairs"></i>
-                        </div>
+                        <p class="text-xs text-gray-600 dark:text-vampire-muted pl-10">Se construye la tabla de fallos (Failure Function).</p>
                     </div>
-                </div>
-                <div class="bg-white dark:bg-vampire-card border border-gray-200 dark:border-vampire-border rounded-xl p-6 shadow-sm">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <span class="text-xs font-semibold text-gray-500 dark:text-vampire-muted uppercase tracking-wider">Precisión de Algoritmo</span>
-                            <h3 class="text-2xl font-bold mt-1">99.4%</h3>
+                    <!-- Paso 3 -->
+                    <div class="p-4 rounded-xl border border-gray-200 dark:border-vampire-border bg-gray-50/50 dark:bg-[#15151e]/50 shadow-sm transition-all">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="w-7 h-7 rounded-full bg-gray-200 dark:bg-vampire-border text-gray-600 dark:text-vampire-muted flex items-center justify-center font-bold text-xs">3</span>
+                            <i class="fa-solid fa-magnifying-glass text-gray-400 dark:text-vampire-muted text-base"></i>
+                            <h4 class="font-bold text-sm">Comparación</h4>
                         </div>
-                        <div class="w-12 h-12 rounded-lg bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 flex items-center justify-center text-xl">
-                            <i class="fa-solid fa-bullseye"></i>
-                        </div>
+                        <p class="text-xs text-gray-600 dark:text-vampire-muted pl-10">Se comparan los caracteres.</p>
                     </div>
-                </div>
-            </div>
-            <div class="bg-white dark:bg-vampire-card border border-gray-200 dark:border-vampire-border rounded-xl p-6 shadow-sm">
-                <h3 class="text-xl font-bold mb-4">Desglose de Coincidencias por Categoría</h3>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-sm">
-                        <thead>
-                            <tr class="border-b border-gray-200 dark:border-vampire-border text-gray-500 dark:text-vampire-muted text-left font-semibold">
-                                <th class="py-3 px-3">Categoría / Patrón</th>
-                                <th class="py-3 px-3">Frecuencia</th>
-                                <th class="py-3 px-3">Porcentaje</th>
-                                <th class="py-3 px-3">Estado de Riesgo</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-100 dark:divide-vampire-border">
-                            <tr>
-                                <td class="py-3 px-3 font-medium">abandonar (Deserción)</td>
-                                <td class="py-3 px-3">9</td>
-                                <td class="py-3 px-3">50%</td>
-                                <td class="py-3 px-3"><span class="bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400 px-2.5 py-1 rounded-full text-xs font-bold">ALTO</span></td>
-                            </tr>
-                            <tr>
-                                <td class="py-3 px-3 font-medium">ayuda (Apoyo Académico)</td>
-                                <td class="py-3 px-3">5</td>
-                                <td class="py-3 px-3">28%</td>
-                                <td class="py-3 px-3"><span class="bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-400 px-2.5 py-1 rounded-full text-xs font-bold">MEDIO</span></td>
-                            </tr>
-                            <tr>
-                                <td class="py-3 px-3 font-medium">estrés (Bienestar)</td>
-                                <td class="py-3 px-3">4</td>
-                                <td class="py-3 px-3">22%</td>
-                                <td class="py-3 px-3"><span class="bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400 px-2.5 py-1 rounded-full text-xs font-bold">BAJO</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-
-        <!-- VISTA: ALERTAS -->
-        <section id="view-alertas" class="hidden animate-fade-in space-y-8">
-            <div class="mb-8">
-                <h2 class="text-3xl font-bold">Pantalla de Alertas</h2>
-                <p class="text-gray-600 dark:text-vampire-muted mt-2">
-                    Monitoreo en tiempo real de notificaciones críticas generadas por los mensajes estudiantiles que requieren atención prioritaria.
-                </p>
-            </div>
-            <div class="grid grid-cols-1 gap-4">
-                <div class="bg-white dark:bg-vampire-card border-l-4 border-red-600 dark:border-vampire-accent border border-gray-200 dark:border-vampire-border rounded-xl p-5 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                    <div class="space-y-1">
-                        <div class="flex items-center gap-2">
-                            <span class="bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400 px-2 py-0.5 rounded text-xs font-bold">CRÍTICO</span>
-                            <span class="text-xs font-mono text-gray-500 dark:text-vampire-muted">#MSG-0842 - 24 Jul 2026</span>
+                    <!-- Paso 4 -->
+                    <div class="p-4 rounded-xl border border-gray-200 dark:border-vampire-border bg-gray-50/50 dark:bg-[#15151e]/50 shadow-sm transition-all">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="w-7 h-7 rounded-full bg-gray-200 dark:bg-vampire-border text-gray-600 dark:text-vampire-muted flex items-center justify-center font-bold text-xs">4</span>
+                            <i class="fa-solid fa-bullseye text-gray-400 dark:text-vampire-muted text-base"></i>
+                            <h4 class="font-bold text-sm">Detección</h4>
                         </div>
-                        <h4 class="font-bold text-base">Alerta de posible abandono detectada</h4>
-                        <p class="text-sm text-gray-600 dark:text-vampire-muted">"Siento que ya no puedo más con la carrera y estoy pensando en abandonar todo este semestre..."</p>
+                        <p class="text-xs text-gray-600 dark:text-vampire-muted pl-10">Se detecta una coincidencia.</p>
                     </div>
-                    <div class="flex items-center gap-3">
-                        <span class="text-xs text-gray-500 dark:text-vampire-muted">Patrón: <strong>abandonar</strong></span>
-                        <button onclick="alert('Marcado como atendido')" class="px-4 py-2 bg-red-600 hover:bg-red-700 dark:bg-vampire-accent dark:hover:bg-vampire-accentHover text-white rounded-lg text-sm font-medium transition-colors">Atender</button>
+                    <!-- Paso 5 -->
+                    <div class="p-4 rounded-xl border border-gray-200 dark:border-vampire-border bg-gray-50/50 dark:bg-[#15151e]/50 shadow-sm transition-all">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="w-7 h-7 rounded-full bg-gray-200 dark:bg-vampire-border text-gray-600 dark:text-vampire-muted flex items-center justify-center font-bold text-xs">5</span>
+                            <i class="fa-solid fa-forward text-gray-400 dark:text-vampire-muted text-base"></i>
+                            <h4 class="font-bold text-sm">Desplazamiento Inteligente</h4>
+                        </div>
+                        <p class="text-xs text-gray-600 dark:text-vampire-muted pl-10">Se continúa la búsqueda utilizando la tabla de fallos.</p>
+                    </div>
+                    <!-- Paso 6 -->
+                    <div class="p-4 rounded-xl border border-gray-200 dark:border-vampire-border bg-gray-50/50 dark:bg-[#15151e]/50 shadow-sm transition-all">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="w-7 h-7 rounded-full bg-gray-200 dark:bg-vampire-border text-gray-600 dark:text-vampire-muted flex items-center justify-center font-bold text-xs">6</span>
+                            <i class="fa-solid fa-flag-checkered text-gray-400 dark:text-vampire-muted text-base"></i>
+                            <h4 class="font-bold text-sm">Finalización</h4>
+                        </div>
+                        <p class="text-xs text-gray-600 dark:text-vampire-muted pl-10">Finaliza el análisis y se muestran los resultados.</p>
                     </div>
                 </div>
 
-                <div class="bg-white dark:bg-vampire-card border-l-4 border-yellow-500 border border-gray-200 dark:border-vampire-border rounded-xl p-5 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                    <div class="space-y-1">
-                        <div class="flex items-center gap-2">
-                            <span class="bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-400 px-2 py-0.5 rounded text-xs font-bold">MODERADO</span>
-                            <span class="text-xs font-mono text-gray-500 dark:text-vampire-muted">#MSG-0115 - 24 Jul 2026</span>
+                <!-- Contenedor Pasos Boyer-Moore (Oculto por defecto) -->
+                <div id="panel-pasos-bm" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 hidden">
+                    <!-- Paso 1 (Resaltado activo como ejemplo de estilo) -->
+                    <div class="p-4 rounded-xl border border-red-500 dark:border-vampire-accent bg-red-50/40 dark:bg-vampire-accent/5 shadow-sm transition-all">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="w-7 h-7 rounded-full bg-red-600 dark:bg-vampire-accent text-white flex items-center justify-center font-bold text-xs">1</span>
+                            <i class="fa-solid fa-arrow-right-to-bracket text-red-600 dark:text-vampire-accent text-base"></i>
+                            <h4 class="font-bold text-sm text-red-900 dark:text-red-400">Carga de Datos</h4>
                         </div>
-                        <h4 class="font-bold text-base">Solicitud de ayuda académica</h4>
-                        <p class="text-sm text-gray-600 dark:text-vampire-muted">"Necesito tutorías urgentes para la materia de Estructuras de Datos porque no entiendo los árboles..."</p>
+                        <p class="text-xs text-gray-600 dark:text-vampire-muted pl-10">Se carga el texto y el patrón.</p>
                     </div>
-                    <div class="flex items-center gap-3">
-                        <span class="text-xs text-gray-500 dark:text-vampire-muted">Patrón: <strong>ayuda</strong></span>
-                        <button onclick="alert('Marcado como atendido')" class="px-4 py-2 bg-gray-200 dark:bg-vampire-border hover:bg-gray-300 dark:hover:bg-gray-700 rounded-lg text-sm font-medium transition-colors">Atender</button>
-                    </div>
-                </div>
-
-                <div class="bg-white dark:bg-vampire-card border-l-4 border-green-500 border border-gray-200 dark:border-vampire-border rounded-xl p-5 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                    <div class="space-y-1">
-                        <div class="flex items-center gap-2">
-                            <span class="bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400 px-2 py-0.5 rounded text-xs font-bold">BAJO</span>
-                            <span class="text-xs font-mono text-gray-500 dark:text-vampire-muted">#MSG-0349 - 23 Jul 2026</span>
+                    <!-- Paso 2 -->
+                    <div class="p-4 rounded-xl border border-gray-200 dark:border-vampire-border bg-gray-50/50 dark:bg-[#15151e]/50 shadow-sm transition-all">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="w-7 h-7 rounded-full bg-gray-200 dark:bg-vampire-border text-gray-600 dark:text-vampire-muted flex items-center justify-center font-bold text-xs">2</span>
+                            <i class="fa-solid fa-table-cells text-gray-400 dark:text-vampire-muted text-base"></i>
+                            <h4 class="font-bold text-sm">Malos Caracteres</h4>
                         </div>
-                        <h4 class="font-bold text-base">Reporte de estrés académico</h4>
-                        <p class="text-sm text-gray-600 dark:text-vampire-muted">"Tengo mucho estrés por las entregas acumuladas de esta semana."</p>
+                        <p class="text-xs text-gray-600 dark:text-vampire-muted pl-10">Se construye la tabla de malos caracteres (Bad Character).</p>
                     </div>
-                    <div class="flex items-center gap-3">
-                        <span class="text-xs text-gray-500 dark:text-vampire-muted">Patrón: <strong>estrés</strong></span>
-                        <button onclick="alert('Marcado como atendido')" class="px-4 py-2 bg-gray-200 dark:bg-vampire-border hover:bg-gray-300 dark:hover:bg-gray-700 rounded-lg text-sm font-medium transition-colors">Atender</button>
+                    <!-- Paso 3 -->
+                    <div class="p-4 rounded-xl border border-gray-200 dark:border-vampire-border bg-gray-50/50 dark:bg-[#15151e]/50 shadow-sm transition-all">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="w-7 h-7 rounded-full bg-gray-200 dark:bg-vampire-border text-gray-600 dark:text-vampire-muted flex items-center justify-center font-bold text-xs">3</span>
+                            <i class="fa-solid fa-arrow-left-long text-gray-400 dark:text-vampire-muted text-base"></i>
+                            <h4 class="font-bold text-sm">Orden Inverso</h4>
+                        </div>
+                        <p class="text-xs text-gray-600 dark:text-vampire-muted pl-10">La comparación comienza desde el último carácter del patrón.</p>
+                    </div>
+                    <!-- Paso 4 -->
+                    <div class="p-4 rounded-xl border border-gray-200 dark:border-vampire-border bg-gray-50/50 dark:bg-[#15151e]/50 shadow-sm transition-all">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="w-7 h-7 rounded-full bg-gray-200 dark:bg-vampire-border text-gray-600 dark:text-vampire-muted flex items-center justify-center font-bold text-xs">4</span>
+                            <i class="fa-solid fa-calculator text-gray-400 dark:text-vampire-muted text-base"></i>
+                            <h4 class="font-bold text-sm">Cálculo de Salto</h4>
+                        </div>
+                        <p class="text-xs text-gray-600 dark:text-vampire-muted pl-10">Si ocurre un fallo, se calcula el desplazamiento.</p>
+                    </div>
+                    <!-- Paso 5 -->
+                    <div class="p-4 rounded-xl border border-gray-200 dark:border-vampire-border bg-gray-50/50 dark:bg-[#15151e]/50 shadow-sm transition-all">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="w-7 h-7 rounded-full bg-gray-200 dark:bg-vampire-border text-gray-600 dark:text-vampire-muted flex items-center justify-center font-bold text-xs">5</span>
+                            <i class="fa-solid fa-angles-right text-gray-400 dark:text-vampire-muted text-base"></i>
+                            <h4 class="font-bold text-sm">Desplazamiento</h4>
+                        </div>
+                        <p class="text-xs text-gray-600 dark:text-vampire-muted pl-10">El patrón se desplaza varios caracteres.</p>
+                    </div>
+                    <!-- Paso 6 -->
+                    <div class="p-4 rounded-xl border border-gray-200 dark:border-vampire-border bg-gray-50/50 dark:bg-[#15151e]/50 shadow-sm transition-all">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="w-7 h-7 rounded-full bg-gray-200 dark:bg-vampire-border text-gray-600 dark:text-vampire-muted flex items-center justify-center font-bold text-xs">6</span>
+                            <i class="fa-solid fa-check-double text-gray-400 dark:text-vampire-muted text-base"></i>
+                            <h4 class="font-bold text-sm">Resultado</h4>
+                        </div>
+                        <p class="text-xs text-gray-600 dark:text-vampire-muted pl-10">Se encuentra una coincidencia o termina la búsqueda.</p>
                     </div>
                 </div>
             </div>
         </section>
-
-        <!-- VISTA: SUGERENCIAS DE ACCIÓN -->
-        <section id="view-sugerencias" class="hidden animate-fade-in space-y-8">
-            <div class="mb-8">
-                <h2 class="text-3xl font-bold">Pantalla de Sugerencias de Acción</h2>
-                <p class="text-gray-600 dark:text-vampire-muted mt-2">
-                    Recomendaciones pedagógicas y protocolos de intervención sugeridos para tutores y personal de bienestar estudiantil.
-                </p>
+        <!-- VISTA: RESULTADOS Y ALERTAS -->
+        <section id="view-resultados" class="animate-fade-in space-y-8">
+            <div class="flex justify-between items-end mb-6">
+                <div>
+                    <h2 class="text-3xl font-bold">Panel de Intervención</h2>
+                    <p class="text-gray-600 dark:text-vampire-muted mt-2">
+                        Análisis final de mensajes con sugerencias de acción inmediata.
+                    </p>
+                </div>
+                <!-- Indicador de eficiencia comparativa -->
+                <div class="text-right">
+                    <span class="text-xs text-vampire-muted uppercase">Algoritmo más eficiente</span>
+                    <div class="text-vampire-accent font-bold text-xl">Boyer-Moore (15% más rápido)</div>
+                </div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-white dark:bg-vampire-card border border-gray-200 dark:border-vampire-border rounded-xl p-6 shadow-sm space-y-4">
-                    <div class="w-10 h-10 rounded-lg bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-vampire-accent flex items-center justify-center font-bold">
-                        <i class="fa-solid fa-phone-volume"></i>
-                    </div>
-                    <h3 class="text-lg font-bold">Contactar Tutor / Psicólogo</h3>
-                    <p class="text-sm text-gray-600 dark:text-vampire-muted">
-                        Para patrones con nivel de alerta <strong>ALTO</strong> (ej. "abandonar"), se recomienda establecer contacto directo y personalizado con el estudiante en un plazo máximo de 24 horas.
+
+            <!-- Layout: Gráfica y Resumen de Alertas -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                
+                <!-- Columna Izquierda: Gráfica de Apoyo (Cargar imagen generada por metrics.py) -->
+                <div class="lg:col-span-1 bg-white dark:bg-vampire-card rounded-xl p-6 border border-vampire-border shadow-sm">
+                    <h3 class="text-sm font-bold mb-4 uppercase tracking-widest text-vampire-muted">Distribución de Riesgo</h3>
+                    <img src="../docs/mockups/chart_categorias.png" alt="Gráfica de Categorías" class="w-full rounded-lg">
+                    <p class="mt-4 text-xs italic text-vampire-muted text-center">
+                        Visualización basada en el análisis de patrones detectados.
                     </p>
-                    <button onclick="alert('Protocolo de contacto iniciado')" class="w-full py-2 bg-red-600 hover:bg-red-700 dark:bg-vampire-accent dark:hover:bg-vampire-accentHover text-white rounded-lg text-sm font-bold transition-colors">Aplicar Protocolo</button>
                 </div>
 
-                <div class="bg-white dark:bg-vampire-card border border-gray-200 dark:border-vampire-border rounded-xl p-6 shadow-sm space-y-4">
-                    <div class="w-10 h-10 rounded-lg bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400 flex items-center justify-center font-bold">
-                        <i class="fa-solid fa-calendar-check"></i>
+                <!-- Columna Derecha: Listado de Alertas Críticas -->
+                <div class="lg:col-span-2 space-y-4">
+                    <h3 class="text-sm font-bold mb-2 uppercase tracking-widest text-vampire-muted">Alertas Críticas Detectadas</h3>
+                    
+                    <!-- Ejemplo de Tarjeta de Alerta (Generar dinámicamente) -->
+                    <div class="bg-white dark:bg-vampire-card border-l-4 border-vampire-accent p-5 rounded-r-xl shadow-sm space-y-3 transition-transform hover:scale-[1.01]">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <span class="bg-red-900/30 text-vampire-accent text-[10px] font-bold px-2 py-0.5 rounded uppercase mb-1 inline-block">Riesgo: Alto</span>
+                                <h4 class="font-bold text-lg">Intención de Abandono</h4>
+                            </div>
+                            <span class="text-vampire-muted text-xs font-mono">Posición: 24</span>
+                        </div>
+                        <p class="text-sm italic text-gray-400">"No aguanto más la presión, estoy pensando en dejar la carrera..."</p>
+                        <div class="bg-[#15151e] p-3 rounded-lg border border-vampire-border">
+                            <span class="text-[10px] font-bold text-vampire-accent uppercase block mb-1">Acción Recomendada:</span>
+                            <p class="text-sm">Derivar inmediatamente a tutor académico para entrevista urgente [9].</p>
+                        </div>
                     </div>
-                    <h3 class="text-lg font-bold">Dar Seguimiento Académico</h3>
-                    <p class="text-sm text-gray-600 dark:text-vampire-muted">
-                        Para patrones con nivel de alerta <strong>MEDIO</strong> (ej. "ayuda"), coordinar sesiones de tutoría académica y revisar el rendimiento en las materias críticas.
-                    </p>
-                    <button onclick="alert('Seguimiento programado')" class="w-full py-2 bg-gray-200 dark:bg-vampire-border hover:bg-gray-300 dark:hover:bg-gray-700 rounded-lg text-sm font-bold transition-colors">Programar Sesión</button>
-                </div>
 
-                <div class="bg-white dark:bg-vampire-card border border-gray-200 dark:border-vampire-border rounded-xl p-6 shadow-sm space-y-4">
-                    <div class="w-10 h-10 rounded-lg bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 flex items-center justify-center font-bold">
-                        <i class="fa-solid fa-chart-line"></i>
+                    <!-- Otra Alerta -->
+                    <div class="bg-white dark:bg-vampire-card border-l-4 border-purple-500 p-5 rounded-r-xl shadow-sm space-y-3 opacity-90">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <span class="bg-purple-900/30 text-purple-400 text-[10px] font-bold px-2 py-0.5 rounded uppercase mb-1 inline-block">Riesgo: Medio</span>
+                                <h4 class="font-bold text-lg">Solicitud de Ayuda</h4>
+                            </div>
+                            <span class="text-vampire-muted text-xs font-mono">Posición: 12</span>
+                        </div>
+                        <p class="text-sm italic text-gray-400">"Necesito ayuda urgente con la materia de algoritmos..."</p>
+                        <div class="bg-[#15151e] p-3 rounded-lg border border-vampire-border">
+                            <span class="text-[10px] font-bold text-purple-400 uppercase block mb-1">Acción Recomendada:</span>
+                            <p class="text-sm">Recomendar programa de tutoría par o bibliografía extra [9].</p>
+                        </div>
                     </div>
-                    <h3 class="text-lg font-bold">Monitoreo Preventivo</h3>
-                    <p class="text-sm text-gray-600 dark:text-vampire-muted">
-                        Para patrones con nivel de alerta <strong>BAJO</strong> (ej. "estrés"), enviar información sobre manejo del tiempo, técnicas de estudio y bienestar estudiantil.
-                    </p>
-                    <button onclick="alert('Recursos enviados')" class="w-full py-2 bg-gray-200 dark:bg-vampire-border hover:bg-gray-300 dark:hover:bg-gray-700 rounded-lg text-sm font-bold transition-colors">Enviar Recursos</button>
                 </div>
             </div>
         </section>
-
     </main>
 
     <script>
@@ -745,65 +757,319 @@
                     <button onclick="eliminarPatron(this)" class="text-red-500 hover:text-red-600 transition"><i class="fa-solid fa-trash"></i></button>
                 </td>
             `;
-            tbody.appendChild(tr);
+            
+            tbody.appendChild(newRow);
+            actualizarContadorPatrones();
 
-            document.getElementById('config-patron').value = '';
-            document.getElementById('config-descripcion').value = '';
-            document.getElementById('config-sugerencia').value = '';
-
-            const counter = document.getElementById('patrones-counter');
-            const count = tbody.getElementsByTagName('tr').length;
-            counter.textContent = `${count} patrones`;
+            // Limpiar campos del formulario
+            patronInput.value = '';
+            descTextarea.value = '';
+            sugTextarea.value = '';
         }
 
-        function eliminarPatron(btn) {
-            const row = btn.closest('tr');
-            row.remove();
-            const tbody = document.getElementById('patrones-table-body');
-            const counter = document.getElementById('patrones-counter');
-            const count = tbody.getElementsByTagName('tr').length;
-            counter.textContent = `${count} patrones`;
+        // 3. Ejecución real contra el backend Flask (/api/ejecutar)
+        const NIVEL_BADGE = {
+            ALTO: 'bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400',
+            MEDIO: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-400',
+            BAJO: 'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400'
+        };
+
+        function leerPatronesDeTabla() {
+            const filas = document.querySelectorAll('#patrones-table-body tr');
+            return Array.from(filas).map(fila => {
+                const celdas = fila.querySelectorAll('td');
+                return {
+                    patron: celdas[0].textContent.trim(),
+                    nivel_alerta: celdas[1].textContent.trim(),
+                    categoria: celdas[2].textContent.trim(),
+                    sugerencia_accion: celdas[3].textContent.trim()
+                };
+            });
         }
 
-        function alternarPasosMockup() {
+        async function ejecutarAlgoritmo() {
             const algo = document.getElementById('algo-select').value;
-            document.getElementById('stat-algoritmo').textContent = algo === 'kmp' ? 'KMP' : 'Boyer-Moore';
+            const boton = event ? event.currentTarget : null;
+            if (boton) { boton.disabled = true; boton.classList.add('opacity-60'); }
+
+            try {
+                const formData = new FormData();
+                formData.append('algoritmo', algo);
+                formData.append('patrones', JSON.stringify(leerPatronesDeTabla()));
+
+                const archivoInput = document.getElementById('algo-file-picker');
+                if (archivoInput.files.length) {
+                    formData.append('mensajes', archivoInput.files[0]);
+                }
+
+                const res = await fetch('/api/ejecutar', { method: 'POST', body: formData });
+                const data = await res.json();
+
+                if (!res.ok) {
+                    alert(data.error || 'Error al ejecutar el análisis.');
+                    return;
+                }
+
+                document.getElementById('stat-mensajes').textContent = data.total_mensajes;
+                document.getElementById('stat-coincidencias').textContent = data.coincidencias;
+                document.getElementById('stat-tiempo').textContent = data.tiempo_ms + ' ms';
+                document.getElementById('stat-algoritmo').textContent = data.algoritmo === 'KMP' ? 'KMP' : 'Boyer-Moore';
+
+                const tbody = document.getElementById('resultados-table-body');
+                if (!data.alertas.length) {
+                    tbody.innerHTML = '<tr><td colspan="5" class="py-4 text-center text-gray-500 dark:text-vampire-muted">Sin coincidencias con los patrones configurados.</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = data.alertas.map(a => `
+                    <tr>
+                        <td class="py-3 px-2 font-mono text-xs">${a.id}</td>
+                        <td class="py-3 px-2 font-medium">${a.patron}</td>
+                        <td class="py-3 px-2">Índice ${a.posicion.join(', ')}</td>
+                        <td class="py-3 px-2">
+                            <span class="${NIVEL_BADGE[a.nivel.toUpperCase()] || NIVEL_BADGE.BAJO} px-2 py-0.5 rounded-full text-xs font-bold">${a.nivel.toUpperCase()}</span>
+                        </td>
+                        <td class="py-3 px-2 text-gray-500 dark:text-vampire-muted">${a.algoritmo}</td>
+                    </tr>
+                `).join('');
+            } catch (err) {
+                alert('No se pudo conectar con el backend (app.py). ¿Está corriendo?');
+                console.error(err);
+            } finally {
+                if (boton) { boton.disabled = false; boton.classList.remove('opacity-60'); }
+            }
         }
 
-        function ejecutarAlgoritmoMock() {
-            alert('¡Algoritmo ejecutado correctamente sobre los datos!');
-            switchView('resultados');
+        // Carga los patrones reales desde patterns.csv (vía /api/patrones) al iniciar
+        async function cargarPatronesDesdeBackend() {
+            try {
+                const res = await fetch('/api/patrones');
+                const patrones = await res.json();
+                if (!patrones.length) return;
+
+                const tbody = document.getElementById('patrones-table-body');
+                tbody.innerHTML = patrones.map(p => `
+                    <tr>
+                        <td class="py-3 px-2 font-medium">${p.patron}</td>
+                        <td class="py-3 px-2">
+                            <span class="${NIVEL_BADGE[p.nivel_alerta.toUpperCase()] || NIVEL_BADGE.BAJO} px-2 py-1 rounded-full text-xs font-bold">${p.nivel_alerta.toUpperCase()}</span>
+                        </td>
+                        <td class="py-3 px-2 text-gray-600 dark:text-vampire-muted">${p.categoria}</td>
+                        <td class="py-3 px-2 text-gray-600 dark:text-vampire-muted">${p.sugerencia_accion}</td>
+                        <td class="py-3 px-2 text-center space-x-2">
+                            <button class="text-blue-500 hover:text-blue-600 transition"><i class="fa-solid fa-pen"></i></button>
+                            <button onclick="eliminarPatron(this)" class="text-red-500 hover:text-red-600 transition"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `).join('');
+                actualizarContadorPatrones();
+            } catch (err) {
+                console.error('No se pudieron cargar los patrones del backend:', err);
+            }
         }
 
-        // Inicializar Gráfica Chart.js
-        window.addEventListener('DOMContentLoaded', () => {
-            const ctx = document.getElementById('patronesChart');
-            if (ctx) {
-                new Chart(ctx, {
-                    type: 'doughnut',
-                    data: {
-                        labels: ['Desmotivación', 'Riesgo Académico', 'Solicitud de Ayuda'],
-                        datasets: [{
-                            data: [50, 30, 20],
-                            backgroundColor: ['#e63946', '#fb8500', '#8338ec'],
-                            borderWidth: 0
-                        }]
+        function toggleDarkMode() {
+            isDarkMode = !isDarkMode;
+            if (isDarkMode) {
+                htmlElement.classList.add('dark');
+                htmlElement.classList.remove('light');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                htmlElement.classList.remove('dark');
+                htmlElement.classList.add('light');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+            updateChartTheme(); // Actualizar colores del gráfico
+        }
+
+        // 4. Navegación entre vistas
+        function switchView(viewName) {
+            // Ocultar todas las vistas
+            document.getElementById('view-inicio').classList.add('hidden');
+            document.getElementById('view-carga').classList.add('hidden');
+            document.getElementById('view-configuracion').classList.add('hidden');
+            document.getElementById('view-ejecucion').classList.add('hidden');
+            
+            // Resetear estilos de navegación
+            document.getElementById('nav-inicio').classList.replace('border-red-600', 'border-transparent');
+            document.getElementById('nav-inicio').classList.replace('dark:border-vampire-accent', 'border-transparent');
+            document.getElementById('nav-inicio').classList.replace('text-red-600', 'text-gray-500');
+            document.getElementById('nav-inicio').classList.replace('dark:text-vampire-accent', 'dark:text-vampire-muted');
+
+            document.getElementById('nav-carga').classList.replace('border-red-600', 'border-transparent');
+            document.getElementById('nav-carga').classList.replace('dark:border-vampire-accent', 'border-transparent');
+            document.getElementById('nav-carga').classList.replace('text-red-600', 'text-gray-500');
+            document.getElementById('nav-carga').classList.replace('dark:text-vampire-muted', 'dark:text-vampire-accent');
+
+            document.getElementById('nav-configuracion').classList.replace('border-red-600', 'border-transparent');
+            document.getElementById('nav-configuracion').classList.replace('dark:border-vampire-accent', 'border-transparent');
+            document.getElementById('nav-configuracion').classList.replace('text-red-600', 'text-gray-500');
+            document.getElementById('nav-configuracion').classList.replace('dark:text-vampire-muted', 'dark:text-vampire-accent');
+
+            document.getElementById('nav-ejecucion').classList.replace('border-red-600', 'border-transparent');
+            document.getElementById('nav-ejecucion').classList.replace('dark:border-vampire-accent', 'border-transparent');
+            document.getElementById('nav-ejecucion').classList.replace('text-red-600', 'text-gray-500');
+            document.getElementById('nav-ejecucion').classList.replace('dark:text-vampire-muted', 'dark:text-vampire-accent');
+
+            // Mostrar vista seleccionada
+            document.getElementById(`view-${viewName}`).classList.remove('hidden');
+            
+            // Activar botón de navegación
+            const activeBtn = document.getElementById(`nav-${viewName}`);
+            activeBtn.classList.replace('border-transparent', 'border-red-600');
+            activeBtn.classList.add('dark:border-vampire-accent');
+            activeBtn.classList.replace('text-gray-500', 'text-red-600');
+            activeBtn.classList.replace('dark:text-vampire-muted', 'dark:text-vampire-accent');
+        }
+
+        // 5. Lógica de Previsualización y Carga de Archivos
+        const previewContent = document.getElementById('preview-content');
+        const previewBadge = document.getElementById('preview-badge');
+        const textInput = document.getElementById('text-input');
+
+        function updatePreviewText() {
+            const text = textInput.value;
+            if (text.trim() === '') {
+                previewContent.innerHTML = '<span class="italic">Aún no hay contenido para previsualizar.</span>';
+            } else {
+                previewContent.classList.remove('italic', 'text-gray-600');
+                previewContent.textContent = text;
+                previewBadge.textContent = "Texto Manual";
+            }
+        }
+
+        // Drag & Drop
+        const dropZone = document.getElementById('drop-zone');
+        
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) { e.preventDefault(); e.stopPropagation(); }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, () => dropZone.classList.add('drag-active'), false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, () => dropZone.classList.remove('drag-active'), false);
+        });
+
+        dropZone.addEventListener('drop', handleDrop, false);
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            if (files.length) simulateUpload(files[0]);
+        }
+
+        function handleFileSelect(e) {
+            if (e.target.files.length) simulateUpload(e.target.files[0]);
+        }
+
+        function simulateUpload(file) {
+            const progressContainer = document.getElementById('progress-container');
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+            const fileNameDisplay = document.getElementById('file-name-display');
+
+            fileNameDisplay.textContent = file.name;
+            progressContainer.classList.remove('hidden');
+            progressBar.style.width = '0%';
+            progressText.textContent = '0%';
+            
+            // Limpiar textarea si se sube archivo
+            textInput.value = '';
+            
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.floor(Math.random() * 15) + 5;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    
+                    // Mostrar simulación en el preview
+                    previewBadge.textContent = "Archivo: " + file.name;
+                    previewContent.innerHTML = `[Contenido simulado extraído de ${file.name}]<br><br>1. "Estoy pensando en abandonar la carrera."<br>2. "No entiendo nada de la materia de algoritmos."<br>3. "Necesito ayuda con los temas de grafos."`;
+                    previewContent.classList.remove('italic');
+                }
+                progressBar.style.width = progress + '%';
+                progressText.textContent = progress + '%';
+            }, 200);
+        }
+
+        // 6. Gráfico con Chart.js
+        let chartInstance = null;
+
+        function initChart() {
+            const ctx = document.getElementById('patronesChart').getContext('2d');
+            
+            const data = {
+                labels: ['Desmotivación', 'Riesgo Académico', 'Solicitud Ayuda', 'Problemas Adaptación'],
+                datasets: [{
+                    label: 'Patrones Detectados (%)',
+                    data: [50, 30, 12, 8],
+                    backgroundColor: [
+                        'rgba(239, 68, 68, 0.8)',   // Rojo
+                        'rgba(249, 115, 22, 0.8)',  // Naranja
+                        'rgba(168, 85, 247, 0.8)',  // Morado
+                        'rgba(99, 102, 241, 0.8)'   // Indigo
+                    ],
+                    borderColor: [
+                        'rgb(239, 68, 68)',
+                        'rgb(249, 115, 22)',
+                        'rgb(168, 85, 247)',
+                        'rgb(99, 102, 241)'
+                    ],
+                    borderWidth: 1,
+                    borderRadius: 6
+                }]
+            };
+
+            const config = {
+                type: 'bar',
+                data: data,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
                     },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                position: 'bottom',
-                                labels: {
-                                    color: document.documentElement.classList.contains('dark') ? '#f8f8f2' : '#1a1a24'
-                                }
-                            }
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            grid: { color: isDarkMode ? '#2d2d3d' : '#e5e7eb' },
+                            ticks: { color: isDarkMode ? '#8b8b9e' : '#6b7280' }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: isDarkMode ? '#8b8b9e' : '#6b7280' }
                         }
                     }
-                });
+                }
+            };
+
+            chartInstance = new Chart(ctx, config);
+        }
+
+        function updateChartTheme() {
+            if (chartInstance) {
+                chartInstance.options.scales.y.grid.color = isDarkMode ? '#2d2d3d' : '#e5e7eb';
+                chartInstance.options.scales.y.ticks.color = isDarkMode ? '#8b8b9e' : '#6b7280';
+                chartInstance.options.scales.x.ticks.color = isDarkMode ? '#8b8b9e' : '#6b7280';
+                chartInstance.update();
             }
-        });
+        }
+
+        // Inicializar gráfico al cargar la página
+        window.onload = function() {
+            initChart();
+            alternarPasosMockup(); // Sincroniza la visualización inicial de los pasos del algoritmo
+            cargarPatronesDesdeBackend(); // Reemplaza los patrones de ejemplo por los de patterns.csv
+        };
     </script>
 </body>
 </html>
