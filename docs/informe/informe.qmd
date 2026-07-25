@@ -113,6 +113,7 @@ Boyer-Moore es un algoritmo de coincidencia de patrones que realiza las comparac
 | [Gemini](https://share.gemini.google/FWFqiGuCsSph) | Generación de formatos de referencia | Revisión del contenido y enlaces colocados antes de ser incluidos | Jhosua |
 | [Gemini](https://share.gemini.google/UQ8GLdDPeA5p) | Lectura dinamica csv | Se busco ayuda sobre como programar la lectura dinamica de csv en python | Edison |
 | [Gemini](https://share.gemini.google/RVEAcRSL6zDG) | Integracion de vistas Web | Ayuda unificando las vistas de configuracion y ejecucion | Edison |
+| [Notebooklm](https://notebooklm.google.com/notebook/683df886-7f08-41cd-9440-8ea01936821c) | Generación de `main`, módulo `metrics` y correcciones de funcionamiento | Se revisó y adaptó el código generado para asegurar la correcta integración y ejecución del programa. | Jair |
 : Uso responsable de herramientas de IA por cada miembro.
 
 ## 17. Conclusiones
